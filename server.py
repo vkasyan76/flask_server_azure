@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import yfinance as yf
@@ -61,4 +62,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=8080)
+    # Use the 'WEBSITES_PORT' environment variable on Azure, or default to 8000 if running locally
+    port = int(os.environ.get('WEBSITES_PORT', 8000))
+    app.run(host='0.0.0.0', port=port, debug=False)
