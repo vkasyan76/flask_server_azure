@@ -123,7 +123,7 @@ def train_and_predict_model_loop(stock_ticker):
     model.compile(optimizer='adam', loss='mean_squared_error')
 
 
-    for run in range(10):
+    for run in range(5):
     # Fit the model
         model.fit(x_train, y_train, epochs=25, batch_size=32)
 
