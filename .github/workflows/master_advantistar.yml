@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - AdvantiStar
 on:
   push:
     branches:
-      - master
+      - master_2
   workflow_dispatch:
 
 jobs:
