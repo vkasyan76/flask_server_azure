@@ -20,16 +20,16 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: "Production2"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -61,18 +61,17 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
-      - name: Login to Azure
+      - name: Log in to Azure CLI using service principal
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_66972C5DB1794500B5CFF9E2715BEACC }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_646B2281F66545CBB21CAFA858DF06D4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5D23D69C0C2546FE828298D5AD0476A1 }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          # client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_66972C5DB1794500B5CFF9E2715BEACC }}
+          # tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_646B2281F66545CBB21CAFA858DF06D4 }}
+          # subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5D23D69C0C2546FE828298D5AD0476A1 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'AdvantiStar2'
-          slot-name: 'Production'
-          
+          app-name: "AdvantiStar2"
+          slot-name: "Production"
